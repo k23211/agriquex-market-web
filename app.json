@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "AgriquexMobile",
+    "slug": "AgriquexMobile",
+    "version": "1.9.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#064e3b"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "buildNumber": "1.1.0"
+    },
+    "android": {
+      "versionCode": 9,
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.kofi71.AgriquexMobile"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5850e21a-4476-4be5-bacd-e959baddadc3"
+      }
+    },
+    "owner": "kofi4"
+  }
+}
