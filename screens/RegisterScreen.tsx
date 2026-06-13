@@ -7,12 +7,14 @@ import {
   KeyboardAvoidingView, Platform,
 } from 'react-native'
 import { supabase } from '../lib/supabase'
+import { useAppTheme } from '../lib/theme'
 
 export default function RegisterScreen({ navigation }: any) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
   const [loading, setLoading] = useState(false)
+  const theme = useAppTheme()
 
   const handleRegister = async () => {
     if (!fullName || !email || !password) {
@@ -55,28 +57,28 @@ export default function RegisterScreen({ navigation }: any) {
       style={styles.bg}
       imageStyle={styles.bgImage}
     >
-      <View style={styles.overlay} />
+      <View style={[styles.overlay, { backgroundColor: theme.overlay }]} />
       <KeyboardAvoidingView
         style={styles.kav}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.brandRow}>
-            <Image source={require('../assets/icon.png')} style={styles.logo} />
+            <Image source={require('../assets/icon.png')} style={[styles.logo, { borderColor: theme.accent }]} />
             <View style={styles.brandText}>
-              <Text style={styles.title}>Agriquex</Text>
-              <Text style={styles.subtitle}>Join Agriquex today</Text>
+              <Text style={[styles.title, { color: theme.text }]}>Agriquex</Text>
+              <Text style={[styles.subtitle, { color: theme.accent2 }]}>Join Agriquex today</Text>
             </View>
           </View>
 
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Create Account</Text>
-            <Text style={styles.cardSub}>Register and start buying or selling</Text>
+          <View style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+            <Text style={[styles.cardTitle, { color: theme.text }]}>Create Account</Text>
+            <Text style={[styles.cardSub, { color: theme.textSecondary }]}>Register and start buying or selling</Text>
 
             <TextInput
-              style={styles.input}
+              style={[styles.input, { backgroundColor: theme.surface, borderColor: theme.border, color: theme.text }]}
               placeholder="Full Name"
-              placeholderTextColor="#6b7280"
+              placeholderTextColor={theme.textSecondary}
               value={fullName}
               onChangeText={setFullName}
             />
@@ -98,17 +100,16 @@ export default function RegisterScreen({ navigation }: any) {
               secureTextEntry
             />
 
-            <TouchableOpacity style={styles.btn} onPress={handleRegister} disabled={loading}>
+            <TouchableOpacity style={[styles.btn, { backgroundColor: theme.accent }]} onPress={handleRegister} disabled={loading}>
               {loading
-                ? <ActivityIndicator color="#fff" />
-                : <Text style={styles.btnText}>Create Account</Text>
+                ? <ActivityIndicator color={theme.background} />
+                : <Text style={[styles.btnText, { color: theme.background }]}>Create Account</Text>
               }
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.link}>
-                Already have an account?{' '}
-                <Text style={styles.linkBold}>Sign In</Text>
+              <Text style={[styles.link, { color: theme.textSecondary }]}>Already have an account?{' '}
+                <Text style={[styles.linkBold, { color: theme.accent }]}>Sign In</Text>
               </Text>
             </TouchableOpacity>
           </View>

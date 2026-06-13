@@ -12,9 +12,11 @@ import {
 } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { useProfile } from '../lib/profileContext'
+import { useAppTheme } from '../lib/theme'
 
 export default function EditProfileScreen({ navigation }: any) {
   const { profile, setProfile } = useProfile()
+  const theme = useAppTheme()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [email, setEmail] = useState('')
@@ -96,7 +98,7 @@ export default function EditProfileScreen({ navigation }: any) {
     navigation.goBack()
   }
 
-  if (loading) return <ActivityIndicator color="#16a34a" style={{ flex: 1 }} />
+  if (loading) return <ActivityIndicator color={theme.accent} style={{ flex: 1 }} />
 
   return (
     <ImageBackground
@@ -106,49 +108,49 @@ export default function EditProfileScreen({ navigation }: any) {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Text style={styles.backButtonText}>←</Text>
+            <Text style={[styles.backButtonText, { color: theme.text }]}>←</Text>
           </TouchableOpacity>
-          <Text style={styles.pageTitle}>Edit Profile</Text>
+          <Text style={[styles.pageTitle, { color: theme.text }]}>Edit Profile</Text>
         </View>
 
         <View style={styles.card}>
         <Text style={styles.label}>Full Name</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { backgroundColor: theme.surface, borderColor: theme.border, color: theme.text }]}
           value={fullName}
           onChangeText={setFullName}
           placeholder="Full Name"
-          placeholderTextColor="#fff"
+          placeholderTextColor={theme.textSecondary}
         />
 
         <Text style={styles.label}>Email</Text>
         <TextInput
-          style={[styles.input, styles.disabledInput]}
+          style={[styles.input, styles.disabledInput, { backgroundColor: theme.surface, borderColor: theme.border, color: theme.text }]}
           value={email}
           editable={false}
         />
 
         <Text style={styles.label}>Phone</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { backgroundColor: theme.surface, borderColor: theme.border, color: theme.text }]}
           value={phone}
           onChangeText={setPhone}
           placeholder="Phone"
-          placeholderTextColor="#fff"
+          placeholderTextColor={theme.textSecondary}
           keyboardType="phone-pad"
         />
 
         <Text style={styles.label}>Location</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { backgroundColor: theme.surface, borderColor: theme.border, color: theme.text }]}
           value={location}
           onChangeText={setLocation}
           placeholder="Location"
-          placeholderTextColor="#fff"
+          placeholderTextColor={theme.textSecondary}
         />
 
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave} disabled={saving}>
-          <Text style={styles.saveButtonText}>{saving ? 'Saving...' : 'Save Changes'}</Text>
+        <TouchableOpacity style={[styles.saveButton, { backgroundColor: theme.accent }]} onPress={handleSave} disabled={saving}>
+          <Text style={[styles.saveButtonText, { color: theme.background }]}>{saving ? 'Saving...' : 'Save Changes'}</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

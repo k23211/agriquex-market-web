@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { supabase } from './lib/supabase'
 import { ProfileProvider } from './lib/profileContext'
+import { useAppTheme } from './lib/theme'
 
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
@@ -26,14 +27,15 @@ const navBg = require('./assets/images/nav.png')
 
 function NavHeader({ title }: { title: string }) {
   const insets = useSafeAreaInsets()
+  const theme = useAppTheme()
   return (
     <ImageBackground
       source={navBg}
       style={[styles.navHeader, { paddingTop: insets.top }]}
       imageStyle={styles.navHeaderImage}
     >
-      <View style={styles.navOverlay} />
-      <Text style={styles.navTitle}>{title}</Text>
+      <View style={[styles.navOverlay, { backgroundColor: theme.navOverlay }]} />
+      <Text style={[styles.navTitle, { color: theme.text }]}>{title}</Text>
     </ImageBackground>
   )
 }
@@ -41,11 +43,13 @@ function NavHeader({ title }: { title: string }) {
 function MainTabs() {
   const insets = useSafeAreaInsets()
 
+  const theme = useAppTheme()
+
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#a3e635',
-        tabBarInactiveTintColor: '#ffffff',
+        tabBarActiveTintColor: theme.tabBarActiveTint,
+        tabBarInactiveTintColor: theme.tabBarInactiveTint,
         tabBarShowLabel: true,
         tabBarStyle: {
           position: 'absolute',
@@ -56,13 +60,13 @@ function MainTabs() {
           elevation: 0,
           height: 70 + insets.bottom,
           paddingBottom: insets.bottom || 12,
-          backgroundColor: '#070707',
+          backgroundColor: theme.tabBarBg,
         },
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: 'bold',
           marginBottom: 6,
-          color: '#ffffff',
+          color: theme.textSecondary,
           textShadowColor: 'rgba(0,0,0,0.8)',
           textShadowOffset: { width: 1, height: 1 },
           textShadowRadius: 3,
@@ -165,7 +169,13 @@ export default function App() {
   return (
     <ProfileProvider>
       <SafeAreaProvider>
-        <NavigationContainer>
+        {/* apply navigation container background from theme */}
+        <NavigationContainer
+          theme={{
+            dark: useAppTheme().dark,
+            colors: { background: useAppTheme().background, card: useAppTheme().surface, text: useAppTheme().text, border: useAppTheme().border, primary: useAppTheme().accent },
+          }}
+        >
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             {/* Always show main app first */}
             <Stack.Screen name="Main" component={MainTabs} />

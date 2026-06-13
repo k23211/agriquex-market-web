@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { supabase } from '../lib/supabase'
+import { useAppTheme } from '../lib/theme'
 
 const SAVE_LOGIN_KEY = 'savedLogin'
 const AGREEMENT_TEXT = `AGRIQUEX USER AGREEMENT
@@ -65,6 +66,7 @@ export default function LoginScreen({ navigation }: any) {
   const [agreementVisible, setAgreementVisible] = useState(false)
   const [rememberLogin, setRememberLogin] = useState(true)
   const [savedLogin, setSavedLogin] = useState<{ email: string; password: string } | null>(null)
+  const theme = useAppTheme()
 
   useEffect(() => {
     async function loadSavedLogin() {
@@ -172,7 +174,7 @@ export default function LoginScreen({ navigation }: any) {
       style={styles.bg}
       imageStyle={styles.bgImage}
     >
-      <View style={styles.overlay} />
+      <View style={[styles.overlay, { backgroundColor: theme.overlay }]} />
 
       <KeyboardAvoidingView
         style={styles.kav}
@@ -182,31 +184,31 @@ export default function LoginScreen({ navigation }: any) {
 
           {/* Logo & branding */}
           <View style={styles.brandRow}>
-            <Image source={require('../assets/icon.png')} style={styles.logo} />
+            <Image source={require('../assets/icon.png')} style={[styles.logo, { borderColor: theme.accent }]} />
             <View style={styles.brandText}>
-              <Text style={styles.title}>Agriquex</Text>
-              <Text style={styles.subtitle}>Buy. Sell. Connect.</Text>
+              <Text style={[styles.title, { color: theme.text }]}>Agriquex</Text>
+              <Text style={[styles.subtitle, { color: theme.accent2 }]}>Buy. Sell. Connect.</Text>
             </View>
           </View>
 
           {/* Card */}
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Welcome Back</Text>
-            <Text style={styles.cardSub}>Sign in to your account</Text>
+          <View style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }] }>
+            <Text style={[styles.cardTitle, { color: theme.text }]}>Welcome Back</Text>
+            <Text style={[styles.cardSub, { color: theme.textSecondary }]}>Sign in to your account</Text>
 
             <TextInput
-              style={styles.input}
+              style={[styles.input, { backgroundColor: theme.surface, borderColor: theme.border, color: theme.text }]}
               placeholder="Email address"
-              placeholderTextColor="#6b7280"
+              placeholderTextColor={theme.textSecondary}
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
               autoCapitalize="none"
             />
             <TextInput
-              style={styles.input}
+              style={[styles.input, { backgroundColor: theme.surface, borderColor: theme.border, color: theme.text }]}
               placeholder="Password"
-              placeholderTextColor="#6b7280"
+              placeholderTextColor={theme.textSecondary}
               value={password}
               onChangeText={setPassword}
               secureTextEntry
@@ -223,21 +225,21 @@ export default function LoginScreen({ navigation }: any) {
               <Text style={styles.agreementText}>Save login for next time</Text>
             </View>
 
-            <TouchableOpacity style={styles.btn} onPress={handleLogin} disabled={loading}>
+            <TouchableOpacity style={[styles.btn, { backgroundColor: theme.accent }]} onPress={handleLogin} disabled={loading}>
               {loading
-                ? <ActivityIndicator color="#fff" />
-                : <Text style={styles.btnText}>Sign In</Text>
+                ? <ActivityIndicator color={theme.background} />
+                : <Text style={[styles.btnText, { color: theme.background }]}>Sign In</Text>
               }
             </TouchableOpacity>
 
             {savedLogin ? (
               <View style={styles.savedLoginSection}>
-                <TouchableOpacity style={styles.savedLoginBtn} onPress={handleSavedLogin} disabled={loading}>
-                  <Text style={styles.savedLoginTitle}>Use saved login</Text>
-                  <Text style={styles.savedLoginText}>{savedLogin.email}</Text>
+                <TouchableOpacity style={[styles.savedLoginBtn, { borderColor: theme.accent, backgroundColor: 'transparent' }]} onPress={handleSavedLogin} disabled={loading}>
+                  <Text style={[styles.savedLoginTitle, { color: theme.accent } ]}>Use saved login</Text>
+                  <Text style={[styles.savedLoginText, { color: theme.accent }]}>{savedLogin.email}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={clearSavedLogin} style={styles.clearSavedLoginBtn}>
-                  <Text style={styles.clearSavedLoginText}>Remove saved login</Text>
+                  <Text style={[styles.clearSavedLoginText, { color: theme.textSecondary }]}>Remove saved login</Text>
                 </TouchableOpacity>
               </View>
             ) : null}
@@ -249,20 +251,18 @@ export default function LoginScreen({ navigation }: any) {
                 onPress={() => setAgreed(!agreed)}
                 activeOpacity={0.8}
               >
-                {agreed && <Text style={styles.checkmark}>✓</Text>}
+                {agreed && <Text style={[styles.checkmark, { color: theme.background }]}>✓</Text>}
               </TouchableOpacity>
-              <Text style={styles.agreementText}>
-                I agree to the{' '}
-                <Text style={styles.agreementLink} onPress={() => setAgreementVisible(true)}>
+              <Text style={[styles.agreementText, { color: theme.textSecondary }]}>I agree to the{' '}
+                <Text style={[styles.agreementLink, { color: theme.accent }]} onPress={() => setAgreementVisible(true)}>
                   User Agreement & Terms
                 </Text>
               </Text>
             </View>
 
             <TouchableOpacity onPress={handleRegister}>
-              <Text style={styles.link}>
-                Don't have an account?{'  '}
-                <Text style={styles.linkBold}>Register</Text>
+              <Text style={[styles.link, { color: theme.textSecondary }]}>Don't have an account?{'  '}
+                <Text style={[styles.linkBold, { color: theme.accent }]}>Register</Text>
               </Text>
             </TouchableOpacity>
           </View>
@@ -277,23 +277,23 @@ export default function LoginScreen({ navigation }: any) {
         transparent
         onRequestClose={() => setAgreementVisible(false)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalSheet}>
-            <View style={styles.modalHandle} />
-            <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>User Agreement</Text>
-              <TouchableOpacity onPress={() => setAgreementVisible(false)} style={styles.modalClose}>
-                <Text style={{ color: '#9ca3af', fontSize: 16 }}>✕</Text>
+        <View style={[styles.modalOverlay, { backgroundColor: theme.overlay }]}>
+          <View style={[styles.modalSheet, { backgroundColor: theme.surface }] }>
+            <View style={[styles.modalHandle, { backgroundColor: theme.border }]} />
+            <View style={[styles.modalHeader, { borderBottomColor: theme.border }] }>
+              <Text style={[styles.modalTitle, { color: theme.text }]}>User Agreement</Text>
+              <TouchableOpacity onPress={() => setAgreementVisible(false)} style={[styles.modalClose, { backgroundColor: theme.surface }] }>
+                <Text style={{ color: theme.textSecondary, fontSize: 16 }}>✕</Text>
               </TouchableOpacity>
             </View>
             <ScrollView style={styles.agreementScroll} showsVerticalScrollIndicator={false}>
-              <Text style={styles.agreementBody}>{AGREEMENT_TEXT}</Text>
+              <Text style={[styles.agreementBody, { color: theme.textSecondary }]}>{AGREEMENT_TEXT}</Text>
             </ScrollView>
             <TouchableOpacity
-              style={styles.acceptBtn}
+              style={[styles.acceptBtn, { backgroundColor: theme.accent }]}
               onPress={() => { setAgreed(true); setAgreementVisible(false) }}
             >
-              <Text style={styles.acceptBtnText}>✓ I Accept the Terms</Text>
+              <Text style={[styles.acceptBtnText, { color: theme.background }]}>✓ I Accept the Terms</Text>
             </TouchableOpacity>
           </View>
         </View>

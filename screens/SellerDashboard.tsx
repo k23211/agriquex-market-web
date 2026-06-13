@@ -15,6 +15,7 @@ import * as ImagePicker from 'expo-image-picker'
 import * as FileSystem from 'expo-file-system/legacy'
 
 import { supabase } from '../lib/supabase'
+import { useAppTheme } from '../lib/theme'
 
 
 
@@ -48,9 +49,11 @@ type View = 'dashboard' | 'post'
 
 
 
+
 export default function SellerDashboard({ navigation }: any) {
 
   const [_session, setSession] = useState<any>(undefined)
+  const theme = useAppTheme()
 
 
 
@@ -474,23 +477,23 @@ export default function SellerDashboard({ navigation }: any) {
 
     return (
 
-      <View style={{ flex: 1, backgroundColor: '#070707', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
+      <View style={{ flex: 1, backgroundColor: theme.background, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
 
         <Text style={{ fontSize: 48, marginBottom: 16 }}>🏪</Text>
 
-        <Text style={{ color: '#fff', fontSize: 20, fontWeight: '900', marginBottom: 8, textAlign: 'center' }}>Start Selling on Agriquex</Text>
+        <Text style={{ color: theme.text, fontSize: 20, fontWeight: '900', marginBottom: 8, textAlign: 'center' }}>Start Selling on Agriquex</Text>
 
-        <Text style={{ color: '#9ca3af', fontSize: 14, textAlign: 'center', marginBottom: 32 }}>Sign in or create a free account to list your products and reach buyers across Ghana.</Text>
+        <Text style={{ color: theme.textSecondary, fontSize: 14, textAlign: 'center', marginBottom: 32 }}>Sign in or create a free account to list your products and reach buyers across Ghana.</Text>
 
-        <TouchableOpacity style={{ backgroundColor: '#16a34a', borderRadius: 14, paddingVertical: 14, paddingHorizontal: 40, marginBottom: 12, width: '100%', alignItems: 'center' }} onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity style={{ backgroundColor: theme.accent, borderRadius: 14, paddingVertical: 14, paddingHorizontal: 40, marginBottom: 12, width: '100%', alignItems: 'center' }} onPress={() => navigation.navigate('Login')}>
 
-          <Text style={{ color: '#fff', fontWeight: '800', fontSize: 16 }}>Sign In to Sell</Text>
+          <Text style={{ color: theme.background, fontWeight: '800', fontSize: 16 }}>Sign In to Sell</Text>
 
         </TouchableOpacity>
 
-        <TouchableOpacity style={{ borderWidth: 1, borderColor: '#16a34a', borderRadius: 14, paddingVertical: 14, paddingHorizontal: 40, width: '100%', alignItems: 'center' }} onPress={() => navigation.navigate('Register')}>
+        <TouchableOpacity style={{ borderWidth: 1, borderColor: theme.accent, borderRadius: 14, paddingVertical: 14, paddingHorizontal: 40, width: '100%', alignItems: 'center' }} onPress={() => navigation.navigate('Register')}>
 
-          <Text style={{ color: '#16a34a', fontWeight: '800', fontSize: 16 }}>Create Free Account</Text>
+          <Text style={{ color: theme.accent, fontWeight: '800', fontSize: 16 }}>Create Free Account</Text>
 
         </TouchableOpacity>
 
@@ -514,7 +517,7 @@ export default function SellerDashboard({ navigation }: any) {
 
           style={styles.dashContainer}
 
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#f59e0b" />}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={theme.accent} />}
 
         >
 
@@ -524,21 +527,22 @@ export default function SellerDashboard({ navigation }: any) {
 
             <View>
 
+
               <Text style={styles.brandText}>
 
-                <Text style={styles.brandBold}>Agri</Text>
+                <Text style={[styles.brandBold, { color: theme.text }]}>Agri</Text>
 
-                <Text style={styles.brandGold}>quex</Text>
+                <Text style={[styles.brandGold, { color: theme.accent2 }]}>quex</Text>
 
               </Text>
 
-              <Text style={styles.dashSubtitle}>Seller Dashboard</Text>
+              <Text style={[styles.dashSubtitle, { color: theme.textSecondary }]}>Seller Dashboard</Text>
 
             </View>
 
-            <Text style={styles.hiText}>
+            <Text style={[styles.hiText, { color: theme.text }] }>
 
-              Hi, <Text style={styles.hiName}>{userName}</Text>
+              Hi, <Text style={[styles.hiName, { color: theme.accent2 }]}>{userName}</Text>
 
             </Text>
 
@@ -548,15 +552,15 @@ export default function SellerDashboard({ navigation }: any) {
 
           {/* Welcome banner */}
 
-          <View style={styles.welcomeBanner}>
+          <View style={[styles.welcomeBanner, { backgroundColor: theme.surface }] }>
 
-            <Text style={styles.welcomeText}>
+            <Text style={[styles.welcomeText, { color: theme.text }]}>
 
-              Welcome back, <Text style={styles.welcomeName}>{userName}</Text>
+              Welcome back, <Text style={[styles.welcomeName, { color: theme.accent2 }]}>{userName}</Text>
 
             </Text>
 
-            <Text style={styles.welcomeSub}>Manage your products and services</Text>
+            <Text style={[styles.welcomeSub, { color: theme.textSecondary }]}>Manage your products and services</Text>
 
           </View>
 
@@ -564,11 +568,11 @@ export default function SellerDashboard({ navigation }: any) {
 
           {/* Stats */}
 
-          <View style={styles.statsCard}>
+          <View style={[styles.statsCard, { backgroundColor: theme.surface }] }>
 
-            <Text style={styles.statsNumber}>{products.length}</Text>
+            <Text style={[styles.statsNumber, { color: theme.accent2 }]}>{products.length}</Text>
 
-            <Text style={styles.statsLabel}>Products</Text>
+            <Text style={[styles.statsLabel, { color: theme.textSecondary }]}>Products</Text>
 
           </View>
 
@@ -588,9 +592,9 @@ export default function SellerDashboard({ navigation }: any) {
 
           {/* Add button */}
 
-          <TouchableOpacity style={styles.addBtn} onPress={() => { resetForm(); setView('post') }}>
+          <TouchableOpacity style={[styles.addBtn, { backgroundColor: theme.accent2 }]} onPress={() => { resetForm(); setView('post') }}>
 
-            <Text style={styles.addBtnText}>+ Add New Product</Text>
+            <Text style={[styles.addBtnText, { color: theme.background }]}>+ Add New Product</Text>
 
           </TouchableOpacity>
 
@@ -600,7 +604,7 @@ export default function SellerDashboard({ navigation }: any) {
 
           {loadingProducts ? (
 
-            <ActivityIndicator color="#f59e0b" style={{ marginTop: 32 }} />
+            <ActivityIndicator color={theme.accent} style={{ marginTop: 32 }} />
 
           ) : products.length === 0 ? (
 

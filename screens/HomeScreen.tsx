@@ -20,6 +20,7 @@ import {
 import { useFocusEffect } from '@react-navigation/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { supabase } from '../lib/supabase'
+import { useAppTheme } from '../lib/theme'
 const SUPPORT_EMAIL = 'ghanamarketplacegh@gmail.com'
 const FACEBOOK_URL = 'https://www.facebook.com/share/1CxreYRz36/'
 const PLAYSTORE_URL = 'https://play.google.com/store/apps/details?id=com.adinkramatchgh.game'
@@ -49,6 +50,7 @@ export default function HomeScreen({ navigation }: any) {
   const [supportName, setSupportName] = useState('')
   const [sending, setSending] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const theme = useAppTheme()
 
   const loadName = async () => {
     const { data: { user } } = await supabase.auth.getUser()
@@ -175,14 +177,14 @@ export default function HomeScreen({ navigation }: any) {
   }
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: theme.background }]}
       contentContainerStyle={styles.contentContainer}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}
           onRefresh={handleRefresh}
-          tintColor="#16a34a"
-          colors={['#16a34a']}
+          tintColor={theme.accent}
+          colors={[theme.accent]}
         />
       }
     >
@@ -191,23 +193,23 @@ export default function HomeScreen({ navigation }: any) {
         style={styles.hero}
         imageStyle={styles.heroImage}
       >
-        <View style={styles.heroOverlay} />
+        <View style={[styles.heroOverlay, { backgroundColor: theme.overlay }]} />
         <View style={styles.topRow}>
           <View>
-            <Text style={styles.logo}>Agriquex</Text>
-            <Text style={styles.logoSub}>Buy. Sell. Connect.</Text>
+            <Text style={[styles.logo, { color: theme.text }]}>Agriquex</Text>
+            <Text style={[styles.logoSub, { color: theme.textSecondary }]}>Buy. Sell. Connect.</Text>
           </View>
           {userName ? (
             <View style={styles.topRight}>
-              <Text style={styles.greeting}>Hi, {userName}</Text>
+              <Text style={[styles.greeting, { color: theme.text }]}>Hi, {userName}</Text>
             </View>
           ) : null}
         </View>
         <View style={styles.heroContent}>
-          <Text style={styles.heroTitle}>
-            Agriquex: <Text style={styles.heroHighlight}>Trusted</Text> Marketplace
+          <Text style={[styles.heroTitle, { color: theme.text }]}>
+            Agriquex: <Text style={[styles.heroHighlight, { color: theme.accent2 }]}>Trusted</Text> Marketplace
           </Text>
-          <Text style={styles.heroDescription}>Buy and sell with confidence across Ghana</Text>
+          <Text style={[styles.heroDescription, { color: theme.textSecondary }]}>Buy and sell with confidence across Ghana</Text>
         </View>
       </ImageBackground>
       <View style={styles.featuresRow}>
@@ -225,7 +227,7 @@ export default function HomeScreen({ navigation }: any) {
                 activeOpacity={0.75}
               >
                 <View style={[styles.featureIcon, styles.featureIconPlaystore]}>
-                  <MaterialCommunityIcons name="google-play" size={20} color="#01875f" />
+                  <MaterialCommunityIcons name="google-play" size={20} color={theme.accent} />
                 </View>
                 <Text style={styles.featureText}>{feature.title}</Text>
               </TouchableOpacity>
@@ -240,7 +242,7 @@ export default function HomeScreen({ navigation }: any) {
                 activeOpacity={0.75}
               >
                 <View style={[styles.featureIcon, styles.featureIconActive]}>
-                  <MaterialCommunityIcons name={feature.icon as any} size={20} color="#16a34a" />
+                  <MaterialCommunityIcons name={feature.icon as any} size={20} color={theme.accent} />
                 </View>
                 <Text style={styles.featureText}>{feature.title}</Text>
               </TouchableOpacity>
@@ -270,7 +272,7 @@ export default function HomeScreen({ navigation }: any) {
                 activeOpacity={0.75}
               >
                 <View style={[styles.featureIcon, styles.featureIconAgriquexData]}>
-                  <MaterialCommunityIcons name={feature.icon as any} size={20} color="#f59e0b" />
+                  <MaterialCommunityIcons name={feature.icon as any} size={20} color={theme.accent2} />
                 </View>
                 <Text style={[styles.featureText, styles.featureTextAgriquexData]}>{feature.title}</Text>
               </TouchableOpacity>
@@ -279,9 +281,9 @@ export default function HomeScreen({ navigation }: any) {
           return (
             <View key={feature.title} style={styles.featureCard}>
               <View style={styles.featureIcon}>
-                <MaterialCommunityIcons name={feature.icon as any} size={20} color="#16a34a" />
+                <MaterialCommunityIcons name={feature.icon as any} size={20} color={theme.accent} />
               </View>
-              <Text style={styles.featureText}>{feature.title}</Text>
+              <Text style={[styles.featureText, { color: theme.text }]}>{feature.title}</Text>
             </View>
           )
         })}
@@ -317,7 +319,7 @@ export default function HomeScreen({ navigation }: any) {
                     style={[styles.tab, supportTab === tab && styles.tabActive]}
                     onPress={() => { setSupportTab(tab); setSupportMessage('') }}
                   >
-                    <Text style={[styles.tabText, supportTab === tab && styles.tabTextActive]}>
+                    <Text style={[styles.tabText, supportTab === tab && styles.tabTextActive, { color: supportTab === tab ? '#fff' : theme.textSecondary }]}>
                       {tabLabels[tab]}
                     </Text>
                   </TouchableOpacity>
@@ -341,20 +343,20 @@ export default function HomeScreen({ navigation }: any) {
                 </Text>
               )}
               <TextInput
-                style={styles.inputName}
+                style={[styles.inputName, { backgroundColor: theme.surface, color: theme.text }]}
                 placeholder="Your name (optional)"
-                placeholderTextColor="#6b7280"
+                placeholderTextColor={theme.textSecondary}
                 value={supportName}
                 onChangeText={setSupportName}
               />
               <TextInput
-                style={styles.inputMessage}
+                style={[styles.inputMessage, { backgroundColor: theme.surface, color: theme.text }]}
                 placeholder={
                   supportTab === 'help' ? 'Describe your issue...' :
                   supportTab === 'report' ? 'What would you like to report?' :
                   'Share your feedback...'
                 }
-                placeholderTextColor="#6b7280"
+                placeholderTextColor={theme.textSecondary}
                 value={supportMessage}
                 onChangeText={setSupportMessage}
                 multiline
@@ -366,8 +368,8 @@ export default function HomeScreen({ navigation }: any) {
                 onPress={handleSupportSubmit}
                 disabled={sending}
               >
-                <MaterialCommunityIcons name="send" size={16} color="#fff" style={{ marginRight: 8 }} />
-                <Text style={styles.sendBtnText}>{sending ? 'Opening email...' : 'Send Message'}</Text>
+                <MaterialCommunityIcons name="send" size={16} color={theme.text} style={{ marginRight: 8 }} />
+                <Text style={[styles.sendBtnText, { color: theme.text }]}>{sending ? 'Opening email...' : 'Send Message'}</Text>
               </TouchableOpacity>
               <Text style={styles.emailNote}>
                 Sends to: {SUPPORT_EMAIL}
@@ -377,22 +379,22 @@ export default function HomeScreen({ navigation }: any) {
         </KeyboardAvoidingView>
       </Modal>
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Top categories</Text>
+        <Text style={[styles.sectionTitle, { color: theme.text }]}>Top categories</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Products')}>
-          <Text style={styles.browseAll}>Browse all</Text>
+          <Text style={[styles.browseAll, { color: theme.accent2 }]}>Browse all</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryRow}>
         {categories.map((category) => (
           <TouchableOpacity
             key={category.label}
-            style={styles.categoryCard}
+            style={[styles.categoryCard, { backgroundColor: theme.surface }]}
             onPress={() => navigation.navigate('Products', { category: category.label })}
           >
-            <View style={styles.categoryIconContainer}>
-              <MaterialCommunityIcons name={category.icon as any} size={26} color="#fff" />
+            <View style={[styles.categoryIconContainer, { backgroundColor: 'rgba(255,255,255,0.04)' }]}>
+              <MaterialCommunityIcons name={category.icon as any} size={26} color={theme.text} />
             </View>
-            <Text style={styles.categoryLabel}>{category.label}</Text>
+            <Text style={[styles.categoryLabel, { color: theme.text }]}>{category.label}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -401,10 +403,10 @@ export default function HomeScreen({ navigation }: any) {
         style={styles.visitorCard}
         imageStyle={styles.visitorImage}
       >
-        <View style={styles.visitorOverlay} />
+        <View style={[styles.visitorOverlay, { backgroundColor: theme.overlay }]} />
         <View style={styles.visitorHeader}>
-          <Text style={styles.visitorTitle}>Platform Stats</Text>
-          <Text style={styles.visitorSubtitle}>Real-time users and visitor insights across Agriquex.</Text>
+          <Text style={[styles.visitorTitle, { color: theme.text }]}>Platform Stats</Text>
+          <Text style={[styles.visitorSubtitle, { color: theme.textSecondary }]}>Real-time users and visitor insights across Agriquex.</Text>
         </View>
         <Text style={styles.visitorUsersLabel}>TOTAL USERS</Text>
         <Text style={styles.visitorUsersValue}>{visitorStats.totalUsers}</Text>
@@ -422,7 +424,7 @@ export default function HomeScreen({ navigation }: any) {
         </TouchableOpacity>
       </View>
       {loading ? (
-        <ActivityIndicator color="#16a34a" style={{ marginTop: 20 }} />
+        <ActivityIndicator color={theme.accent} style={{ marginTop: 20 }} />
       ) : (
         <FlatList
           data={products}
@@ -431,15 +433,15 @@ export default function HomeScreen({ navigation }: any) {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={styles.productCard}
+              style={[styles.productCard, { backgroundColor: theme.surface }]}
               onPress={() => navigation.navigate('ProductDetail', { product: item })}
             >
               <Image
                 source={{ uri: item.image_url || 'https://via.placeholder.com/150' }}
                 style={styles.productImage}
               />
-              <Text style={styles.productName} numberOfLines={1}>{item.name}</Text>
-              <Text style={styles.productPrice}>GH₵ {item.price}</Text>
+              <Text style={[styles.productName, { color: theme.text }]} numberOfLines={1}>{item.name}</Text>
+              <Text style={[styles.productPrice, { color: theme.accent2 }]}>GH₵ {item.price}</Text>
             </TouchableOpacity>
           )}
         />

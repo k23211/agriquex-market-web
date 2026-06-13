@@ -4,6 +4,7 @@ import {
   StyleSheet, Image, ImageBackground, ActivityIndicator, TextInput
 } from 'react-native'
 import { supabase } from '../lib/supabase'
+import { useAppTheme } from '../lib/theme'
 import { useFocusEffect } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -16,6 +17,7 @@ export default function ProductsScreen({ navigation, route }: any) {
   const [search, setSearch] = useState('')
   const [recentSearches, setRecentSearches] = useState<string[]>([])
   const [ratings, setRatings] = useState<Record<string, { avg: number; count: number }>>({})
+  const theme = useAppTheme()
 
   useEffect(() => {
     fetchProducts(selectedCat)
@@ -116,11 +118,11 @@ export default function ProductsScreen({ navigation, route }: any) {
       style={styles.background}
       imageStyle={styles.backgroundImage}
     >
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: theme.background }]}> 
         <TextInput
           style={styles.search}
           placeholder="🔍 Search products..."
-          placeholderTextColor="#9ca3af"
+          placeholderTextColor={theme.textSecondary}
           value={search}
           onChangeText={setSearch}
           onSubmitEditing={() => saveSearch(search)}
@@ -134,9 +136,9 @@ export default function ProductsScreen({ navigation, route }: any) {
             keyExtractor={(item) => item}
             contentContainerStyle={{ paddingHorizontal: 12, paddingBottom: 8 }}
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.recentChip} onPress={() => { setSearch(item); saveSearch(item); }}>
-                <Text style={styles.recentText}>{item}</Text>
-              </TouchableOpacity>
+              <TouchableOpacity style={[styles.recentChip, { backgroundColor: theme.surface, borderColor: theme.border }]} onPress={() => { setSearch(item); saveSearch(item); }}>
+                  <Text style={[styles.recentText, { color: theme.text }]}>{item}</Text>
+                </TouchableOpacity>
             )}
           />
         )}
@@ -150,16 +152,16 @@ export default function ProductsScreen({ navigation, route }: any) {
           contentContainerStyle={{ paddingHorizontal: 12 }}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={[styles.catChip, selectedCat === item && styles.catActive]}
+              style={[styles.catChip, selectedCat === item && styles.catActive, { backgroundColor: selectedCat === item ? theme.accent : theme.surface, borderColor: theme.border }]}
               onPress={() => setSelectedCat(item)}
             >
-              <Text style={[styles.catText, selectedCat === item && styles.catTextActive]}>{item}</Text>
+              <Text style={[styles.catText, selectedCat === item && styles.catTextActive, { color: selectedCat === item ? '#fff' : theme.text }]}>{item}</Text>
             </TouchableOpacity>
           )}
         />
 
         {loading ? (
-          <ActivityIndicator color="#16a34a" style={{ marginTop: 40 }} />
+          <ActivityIndicator color={theme.accent} style={{ marginTop: 40 }} />
         ) : filtered.length === 0 ? (
           <View style={styles.empty}>
             <Text style={styles.emptyText}>No products found</Text>

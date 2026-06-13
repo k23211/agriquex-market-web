@@ -19,6 +19,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { supabase } from '../lib/supabase'
 
 import { useProfile } from '../lib/profileContext'
+import { useAppTheme } from '../lib/theme'
 
 import * as FileSystem from 'expo-file-system/legacy'
 
@@ -99,6 +100,7 @@ export default function AccountScreen({ navigation }: any) {
   const [uploading, setUploading] = useState(false)
 
   const [agreementVisible, setAgreementVisible] = useState(false)
+  const theme = useAppTheme()
 
   useEffect(() => {
 
@@ -164,23 +166,24 @@ export default function AccountScreen({ navigation }: any) {
 
     return (
 
-      <View style={{ flex: 1, backgroundColor: '#070707', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
+      <View style={{ flex: 1, backgroundColor: theme.background, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
 
         <Text style={{ fontSize: 48, marginBottom: 16 }}>👤</Text>
 
-        <Text style={{ color: '#fff', fontSize: 20, fontWeight: '900', marginBottom: 8, textAlign: 'center' }}>Sign in to your account</Text>
+        <Text style={{ color: theme.text, fontSize: 20, fontWeight: '900', marginBottom: 8, textAlign: 'center' }}>Sign in to your account</Text>
 
-        <Text style={{ color: '#9ca3af', fontSize: 14, textAlign: 'center', marginBottom: 32 }}>Create an account or sign in to manage your profile and listings.</Text>
+        <Text style={{ color: theme.textSecondary, fontSize: 14, textAlign: 'center', marginBottom: 32 }}>Create an account or sign in to manage your profile and listings.</Text>
 
-        <TouchableOpacity style={{ backgroundColor: '#16a34a', borderRadius: 14, paddingVertical: 14, paddingHorizontal: 40, marginBottom: 12, width: '100%', alignItems: 'center' }} onPress={() => navigation.navigate('Login')}>
 
-          <Text style={{ color: '#fff', fontWeight: '800', fontSize: 16 }}>Sign In</Text>
+        <TouchableOpacity style={{ backgroundColor: theme.accent, borderRadius: 14, paddingVertical: 14, paddingHorizontal: 40, marginBottom: 12, width: '100%', alignItems: 'center' }} onPress={() => navigation.navigate('Login')}>
+
+          <Text style={{ color: theme.background, fontWeight: '800', fontSize: 16 }}>Sign In</Text>
 
         </TouchableOpacity>
 
-        <TouchableOpacity style={{ borderWidth: 1, borderColor: '#16a34a', borderRadius: 14, paddingVertical: 14, paddingHorizontal: 40, width: '100%', alignItems: 'center' }} onPress={() => navigation.navigate('Register')}>
+        <TouchableOpacity style={{ borderWidth: 1, borderColor: theme.accent, borderRadius: 14, paddingVertical: 14, paddingHorizontal: 40, width: '100%', alignItems: 'center' }} onPress={() => navigation.navigate('Register')}>
 
-          <Text style={{ color: '#16a34a', fontWeight: '800', fontSize: 16 }}>Create Account</Text>
+          <Text style={{ color: theme.accent, fontWeight: '800', fontSize: 16 }}>Create Account</Text>
 
         </TouchableOpacity>
 
@@ -326,7 +329,7 @@ export default function AccountScreen({ navigation }: any) {
 
   }
 
-  if (loading) return <ActivityIndicator color="#16a34a" style={{ flex: 1 }} />
+  if (loading) return <ActivityIndicator color={theme.accent} style={{ flex: 1 }} />
 
   return (
 
@@ -334,17 +337,17 @@ export default function AccountScreen({ navigation }: any) {
 
       <ImageBackground source={profileBg} style={styles.banner} imageStyle={styles.bannerImage}>
 
-        <View style={styles.bannerOverlay} />
+        <View style={[styles.bannerOverlay, { backgroundColor: theme.navOverlay }]} />
 
         <View style={styles.topBar}>
 
-          <Text style={styles.headerTitle}>Account</Text>
+          <Text style={[styles.headerTitle, { color: theme.text }]}>Account</Text>
 
         </View>
 
-        <TouchableOpacity style={styles.signOutTop} onPress={handleSignOut}>
+        <TouchableOpacity style={[styles.signOutTop, { backgroundColor: theme.surface, borderColor: theme.border }]} onPress={handleSignOut}>
 
-          <Text style={styles.signOutTopText}>Sign Out</Text>
+          <Text style={[styles.signOutTopText, { color: theme.text }]}>Sign Out</Text>
 
         </TouchableOpacity>
 

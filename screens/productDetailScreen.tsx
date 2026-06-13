@@ -6,6 +6,7 @@ import {
 import { supabase } from '../lib/supabase'
 import { useEffect, useState, useRef } from 'react'
 import * as Location from 'expo-location'
+import { useAppTheme } from '../lib/theme'
 
 export default function ProductDetailScreen({ route, navigation }: any) {
   const { product } = route.params
@@ -30,6 +31,8 @@ export default function ProductDetailScreen({ route, navigation }: any) {
   const [isBoosted, setIsBoosted] = useState(product.is_boosted || false)
   const [boostLoading, setBoostLoading] = useState(false)
   const [boostModalVisible, setBoostModalVisible] = useState(false)
+
+  const theme = useAppTheme()
 
   const hasIncrementedView = useRef(false)
 
@@ -241,9 +244,9 @@ export default function ProductDetailScreen({ route, navigation }: any) {
 
   // ─── Render ────────────────────────────────────────────────────────
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, { backgroundColor: theme.background }]}> 
       <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
-        <Text style={styles.backText}>← Back</Text>
+        <Text style={[styles.backText, { color: theme.accent }]}>← Back</Text>
       </TouchableOpacity>
 
       {/* Product Image */}
@@ -258,18 +261,18 @@ export default function ProductDetailScreen({ route, navigation }: any) {
       </View>
 
       {/* Info Card */}
-      <View style={styles.infoCard}>
+      <View style={[styles.infoCard, { backgroundColor: theme.surface }] }>
         <View style={styles.titleRow}>
-          <Text style={styles.title}>{product.name}</Text>
+          <Text style={[styles.title, { color: theme.text }]}>{product.name}</Text>
           {isBoosted && (
             <View style={styles.boostedBadge}>
               <Text style={styles.boostedText}>🚀 Boosted</Text>
             </View>
           )}
         </View>
-        <Text style={styles.price}>GH₵ {product.price}</Text>
+        <Text style={[styles.price, { color: theme.accent2 }]}>GH₵ {product.price}</Text>
         <View style={styles.categoryBadge}>
-          <Text style={styles.categoryText}>{product.category}</Text>
+          <Text style={[styles.categoryText, { color: theme.accent }]}>{product.category}</Text>
         </View>
         {avgRating && (
           <View style={styles.ratingRow}>
@@ -284,8 +287,8 @@ export default function ProductDetailScreen({ route, navigation }: any) {
 
       {/* Seller Card */}
       {sellerProfile && (
-        <View style={styles.sellerCard}>
-          <Text style={styles.sellerHeading}>SELLER</Text>
+        <View style={[styles.sellerCard, { backgroundColor: theme.surface }] }>
+          <Text style={[styles.sellerHeading, { color: theme.textSecondary }]}>SELLER</Text>
           <View style={styles.sellerRow}>
             <View style={styles.sellerAvatar}>
               {sellerProfile.avatar_url
@@ -294,9 +297,9 @@ export default function ProductDetailScreen({ route, navigation }: any) {
               }
             </View>
             <View>
-              <Text style={styles.sellerName}>{sellerProfile.full_name || 'Unknown Seller'}</Text>
+              <Text style={[styles.sellerName, { color: theme.text }]}>{sellerProfile.full_name || 'Unknown Seller'}</Text>
               {sellerProfile.location
-                ? <Text style={styles.sellerLocation}>📍 {sellerProfile.location}</Text>
+                ? <Text style={[styles.sellerLocation, { color: theme.textSecondary }]}>📍 {sellerProfile.location}</Text>
                 : null}
             </View>
           </View>
@@ -304,7 +307,7 @@ export default function ProductDetailScreen({ route, navigation }: any) {
           {/* Boost Button (seller only) */}
           {session?.user?.id === product.seller_id && (
             <TouchableOpacity
-              style={[styles.boostBtn, isBoosted && styles.boostBtnActive]}
+              style={[styles.boostBtn, isBoosted && styles.boostBtnActive, { borderColor: theme.accent }]}
               onPress={handleBoost}
               disabled={boostLoading}
             >
@@ -319,8 +322,8 @@ export default function ProductDetailScreen({ route, navigation }: any) {
 
       {/* Contact Buttons */}
       <View style={styles.btnRow}>
-        <TouchableOpacity style={styles.callBtn} onPress={() => requireLogin(handleContact)}>
-          <Text style={styles.callBtnText}>📞 Call Seller</Text>
+        <TouchableOpacity style={[styles.callBtn, { backgroundColor: theme.accent }]} onPress={() => requireLogin(handleContact)}>
+          <Text style={[styles.callBtnText, { color: theme.background }]}>📞 Call Seller</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.waBtn} onPress={() => requireLogin(handleWhatsApp)}>
           <Text style={styles.waBtnText}>💬 WhatsApp</Text>
