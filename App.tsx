@@ -1,7 +1,7 @@
 import 'react-native-url-polyfill/auto'
 import 'react-native-get-random-values'
 import { useEffect, useState } from 'react'
-import { StyleSheet, ImageBackground, View, Text } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -23,20 +23,14 @@ import ProductDetailScreen from './screens/productDetailScreen'
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
-const navBg = require('./assets/images/nav.png')
 
 function NavHeader({ title }: { title: string }) {
   const insets = useSafeAreaInsets()
   const theme = useAppTheme()
   return (
-    <ImageBackground
-      source={navBg}
-      style={[styles.navHeader, { paddingTop: insets.top }]}
-      imageStyle={styles.navHeaderImage}
-    >
-      <View style={[styles.navOverlay, { backgroundColor: theme.navOverlay }]} />
+    <View style={[styles.navHeader, { paddingTop: insets.top, backgroundColor: theme.surface }]}> 
       <Text style={[styles.navTitle, { color: theme.text }]}>{title}</Text>
-    </ImageBackground>
+    </View>
   )
 }
 
@@ -134,13 +128,7 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     paddingHorizontal: 20,
   },
-  navHeaderImage: {
-    resizeMode: 'cover',
-  },
-  navOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.45)',
-  },
+  
   navTitle: {
     color: '#ffffff',
     fontSize: 22,

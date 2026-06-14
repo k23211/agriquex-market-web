@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  ImageBackground,
+  
   Image,
   ActivityIndicator,
   FlatList,
@@ -188,12 +188,7 @@ export default function HomeScreen({ navigation }: any) {
         />
       }
     >
-      <ImageBackground
-        source={require('../assets/images/home.png')}
-        style={styles.hero}
-        imageStyle={styles.heroImage}
-      >
-        <View style={[styles.heroOverlay, { backgroundColor: theme.overlay }]} />
+      <View style={[styles.hero, { backgroundColor: theme.surface }]}>
         <View style={styles.topRow}>
           <View>
             <Text style={[styles.logo, { color: theme.text }]}>Agriquex</Text>
@@ -211,7 +206,7 @@ export default function HomeScreen({ navigation }: any) {
           </Text>
           <Text style={[styles.heroDescription, { color: theme.textSecondary }]}>Buy and sell with confidence across Ghana</Text>
         </View>
-      </ImageBackground>
+      </View>
       <View style={styles.featuresRow}>
         {featureCards.map((feature) => {
           const isSupport = feature.title === '24/7 Support'
@@ -398,12 +393,7 @@ export default function HomeScreen({ navigation }: any) {
           </TouchableOpacity>
         ))}
       </View>
-      <ImageBackground
-        source={require('../assets/images/visitor.png')}
-        style={styles.visitorCard}
-        imageStyle={styles.visitorImage}
-      >
-        <View style={[styles.visitorOverlay, { backgroundColor: theme.overlay }]} />
+      <View style={[styles.visitorCard, { backgroundColor: theme.surface }]}>
         <View style={styles.visitorHeader}>
           <Text style={[styles.visitorTitle, { color: theme.text }]}>Platform Stats</Text>
           <Text style={[styles.visitorSubtitle, { color: theme.textSecondary }]}>Real-time users and visitor insights across Agriquex.</Text>
@@ -416,7 +406,7 @@ export default function HomeScreen({ navigation }: any) {
             <Text style={styles.visitorMetricValue}>{visitorStats.totalVisitors}</Text>
           </View>
         </View>
-      </ImageBackground>
+      </View>
       <View style={styles.sectionHeaderAlt}>
         <Text style={styles.sectionTitle}>Latest Products</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Products')}>
@@ -454,8 +444,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#070707' },
   contentContainer: { paddingBottom: 32 },
   hero: { width: '100%', paddingHorizontal: 20, paddingTop: 22, paddingBottom: 28, backgroundColor: '#111827' },
-  heroImage: { resizeMode: 'cover', opacity: 0.8 },
-  heroOverlay: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.45)' },
+  
   topRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   logo: { color: '#fff', fontSize: 22, fontWeight: '800' },
   logoSub: { color: '#d1d5db', marginTop: 4, fontSize: 12 },
@@ -505,8 +494,7 @@ const styles = StyleSheet.create({
   categoryIconContainer: { width: 48, height: 48, borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.12)', alignItems: 'center', justifyContent: 'center' },
   categoryLabel: { color: '#fff', fontSize: 15, fontWeight: '800', marginTop: 20 },
   visitorCard: { width: '100%', borderRadius: 24, overflow: 'hidden', marginTop: 20, padding: 20, alignSelf: 'center', minHeight: 240, justifyContent: 'space-between' },
-  visitorImage: { resizeMode: 'cover', opacity: 0.95 },
-  visitorOverlay: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0, 0, 0, 0.32)' },
+  
   visitorHeader: { marginBottom: 20 },
   visitorTitle: { color: '#fff', fontSize: 18, fontWeight: '900', marginBottom: 6 },
   visitorSubtitle: { color: '#d1d5db', fontSize: 12, lineHeight: 18, maxWidth: '85%' },

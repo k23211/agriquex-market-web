@@ -6,7 +6,7 @@ import {
 
   StyleSheet, Alert, ActivityIndicator,
 
-  ScrollView, Image, RefreshControl, ImageBackground,
+  ScrollView, Image, RefreshControl,
 
 } from 'react-native'
 
@@ -19,7 +19,6 @@ import { useAppTheme } from '../lib/theme'
 
 
 
-const sellBg = require('../assets/images/sell.png')
 
 const categories = ['Electronics', 'Fashion', 'Food', 'Home', 'Beauty', 'Vehicles', 'Other']
 
@@ -511,7 +510,7 @@ export default function SellerDashboard({ navigation }: any) {
 
     return (
 
-      <ImageBackground source={sellBg} style={styles.background} imageStyle={styles.imageBackground}>
+      <View style={[styles.background, { backgroundColor: theme.background }]}> 
 
         <ScrollView
 
@@ -668,7 +667,7 @@ export default function SellerDashboard({ navigation }: any) {
 
         </ScrollView>
 
-      </ImageBackground>
+      </View>
 
     )
 
@@ -680,7 +679,7 @@ export default function SellerDashboard({ navigation }: any) {
 
   return (
 
-    <ImageBackground source={sellBg} style={styles.background} imageStyle={styles.imageBackground}>
+    <View style={[styles.background, { backgroundColor: theme.background }]}> 
 
       <ScrollView style={styles.formContainer}>
 
@@ -769,7 +768,7 @@ export default function SellerDashboard({ navigation }: any) {
 
       </ScrollView>
 
-    </ImageBackground>
+    </View>
 
   )
 
@@ -783,7 +782,7 @@ const styles = StyleSheet.create({
 
   background: { flex: 1 },
 
-  imageBackground: { resizeMode: 'cover', opacity: 1 },
+  
 
 
 

@@ -8,7 +8,7 @@ import {
   Alert,
   ActivityIndicator,
   ScrollView,
-  ImageBackground,
+  
 } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { useProfile } from '../lib/profileContext'
@@ -101,10 +101,7 @@ export default function EditProfileScreen({ navigation }: any) {
   if (loading) return <ActivityIndicator color={theme.accent} style={{ flex: 1 }} />
 
   return (
-    <ImageBackground
-      source={require('../assets/images/profile.png')}
-      style={styles.background}
-    >
+    <View style={[styles.background, { backgroundColor: theme.background }]}> 
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
@@ -154,7 +151,7 @@ export default function EditProfileScreen({ navigation }: any) {
         </TouchableOpacity>
       </View>
     </ScrollView>
-    </ImageBackground>
+    </View>
   )
 }
 

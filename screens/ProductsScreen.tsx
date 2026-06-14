@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import {
   View, Text, FlatList, TouchableOpacity,
-  StyleSheet, Image, ImageBackground, ActivityIndicator, TextInput
+  StyleSheet, Image, ActivityIndicator, TextInput
 } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { useAppTheme } from '../lib/theme'
@@ -113,11 +113,7 @@ export default function ProductsScreen({ navigation, route }: any) {
   }
 
   return (
-    <ImageBackground
-      source={require('../assets/images/browse.png')}
-      style={styles.background}
-      imageStyle={styles.backgroundImage}
-    >
+    <View style={[styles.background, { backgroundColor: theme.background }]}> 
       <View style={[styles.container, { backgroundColor: theme.background }]}> 
         <TextInput
           style={styles.search}
@@ -214,13 +210,13 @@ export default function ProductsScreen({ navigation, route }: any) {
           />
         )}
       </View>
-    </ImageBackground>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   background: { flex: 1, backgroundColor: 'transparent' },
-  backgroundImage: { opacity: 0.8 },
+  
   container: { flex: 1, backgroundColor: 'transparent' },
   search: { margin: 12, padding: 12, backgroundColor: '#ffffffde', borderRadius: 10, borderWidth: 1, borderColor: '#ddd', fontSize: 15, color: '#111' },
   catRow: { marginBottom: 8, maxHeight: 46 },

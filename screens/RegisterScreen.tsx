@@ -3,7 +3,7 @@ import {
   View, Text, TextInput,
   TouchableOpacity, StyleSheet,
   Alert, ActivityIndicator, Image,
-  ImageBackground, ScrollView,
+  ScrollView,
   KeyboardAvoidingView, Platform,
 } from 'react-native'
 import { supabase } from '../lib/supabase'
@@ -52,12 +52,7 @@ export default function RegisterScreen({ navigation }: any) {
   }
 
   return (
-    <ImageBackground
-      source={require('../assets/images/sell.png')}
-      style={styles.bg}
-      imageStyle={styles.bgImage}
-    >
-      <View style={[styles.overlay, { backgroundColor: theme.overlay }]} />
+    <View style={[styles.bg, { backgroundColor: theme.background }]}> 
       <KeyboardAvoidingView
         style={styles.kav}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -115,14 +110,13 @@ export default function RegisterScreen({ navigation }: any) {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </ImageBackground>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   bg: { flex: 1 },
-  bgImage: { resizeMode: 'cover' },
-  overlay: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.62)' },
+  
   kav: { flex: 1 },
   scroll: { flexGrow: 1, justifyContent: 'center', padding: 24 },
 

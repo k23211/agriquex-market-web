@@ -4,7 +4,7 @@ import {
 
   View, Text, TouchableOpacity,
 
-  StyleSheet, Image, ImageBackground,
+  StyleSheet, Image,
 
   ActivityIndicator, ScrollView,
 
@@ -23,7 +23,7 @@ import { useAppTheme } from '../lib/theme'
 
 import * as FileSystem from 'expo-file-system/legacy'
 
-const profileBg = require('../assets/images/profile.png')
+ 
 
 const AGREEMENT_TEXT = `AGRIQUEX USER AGREEMENT
 
@@ -335,9 +335,7 @@ export default function AccountScreen({ navigation }: any) {
 
     <ScrollView style={styles.screen} contentContainerStyle={styles.container}>
 
-      <ImageBackground source={profileBg} style={styles.banner} imageStyle={styles.bannerImage}>
-
-        <View style={[styles.bannerOverlay, { backgroundColor: theme.navOverlay }]} />
+      <View style={[styles.banner, { backgroundColor: theme.surface }]}>
 
         <View style={styles.topBar}>
 
@@ -391,7 +389,7 @@ export default function AccountScreen({ navigation }: any) {
 
         </View>
 
-      </ImageBackground>
+      </View>
 
       <View style={styles.detailsCard}>
 
@@ -507,9 +505,7 @@ const styles = StyleSheet.create({
 
   banner: { width: '100%', minHeight: 320, paddingHorizontal: 20, paddingTop: 14, paddingBottom: 18, justifyContent: 'space-between' },
 
-  bannerImage: { resizeMode: 'cover' },
-
-  bannerOverlay: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.44)' },
+  
 
   topBar: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 },
 
