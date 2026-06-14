@@ -7,6 +7,7 @@ import { supabase } from '../lib/supabase'
 import { useAppTheme } from '../lib/theme'
 import { useFocusEffect } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const categories = ['All', 'Electronics', 'Fashion', 'Food', 'Home', 'Beauty', 'Vehicles', 'Other']
 
@@ -18,6 +19,7 @@ export default function ProductsScreen({ navigation, route }: any) {
   const [recentSearches, setRecentSearches] = useState<string[]>([])
   const [ratings, setRatings] = useState<Record<string, { avg: number; count: number }>>({})
   const theme = useAppTheme()
+  const insets = useSafeAreaInsets()
 
   useEffect(() => {
     fetchProducts(selectedCat)
@@ -114,7 +116,7 @@ export default function ProductsScreen({ navigation, route }: any) {
 
   return (
     <View style={[styles.background, { backgroundColor: theme.background }]}> 
-      <View style={[styles.container, { backgroundColor: theme.background }]}> 
+      <View style={[styles.container, { backgroundColor: theme.background, paddingTop: insets.top + 8 }]}> 
         <TextInput
           style={styles.search}
           placeholder="🔍 Search products..."
@@ -219,7 +221,7 @@ const styles = StyleSheet.create({
   
   container: { flex: 1, backgroundColor: 'transparent' },
   search: { margin: 12, padding: 12, backgroundColor: '#ffffffde', borderRadius: 10, borderWidth: 1, borderColor: '#ddd', fontSize: 15, color: '#111' },
-  catRow: { marginBottom: 8, marginTop: 8, paddingTop: 6 },
+  catRow: { marginBottom: 8, marginTop: 18, paddingVertical: 10, minHeight: 56, zIndex: 10 },
   catChip: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', borderRadius: 20, paddingHorizontal: 14, paddingVertical: 8, marginRight: 8, height: 36, justifyContent: 'center' },
   catActive: { backgroundColor: '#16a34a', borderColor: '#16a34a' },
   catText: { color: '#666', fontSize: 13 },
