@@ -49,7 +49,7 @@ export default function ProductDetailScreen({ route, navigation }: any) {
         .select('full_name, phone, location, avatar_url')
         .eq('id', product.seller_id)
         .single()
-        .then(({ data }) => setSellerProfile(data))
+        .then((res: any) => setSellerProfile(res.data))
     }
   }, [])
 

@@ -14,6 +14,9 @@ import * as ImagePicker from 'expo-image-picker'
 
 import * as FileSystem from 'expo-file-system/legacy'
 
+// `atob` may not be present in the RN TS environment; declare for TypeScript.
+declare function atob(data: string): string;
+
 import { supabase } from '../lib/supabase'
 import { useAppTheme } from '../lib/theme'
 
@@ -44,7 +47,7 @@ type Product = {
 
 
 
-type View = 'dashboard' | 'post'
+type ViewMode = 'dashboard' | 'post'
 
 
 
@@ -56,7 +59,7 @@ export default function SellerDashboard({ navigation }: any) {
 
 
 
-  const [view, setView] = useState<View>('dashboard')
+  const [view, setView] = useState<ViewMode>('dashboard')
 
   const [products, setProducts] = useState<Product[]>([])
 

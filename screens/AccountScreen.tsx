@@ -23,6 +23,9 @@ import { useAppTheme } from '../lib/theme'
 
 import * as FileSystem from 'expo-file-system/legacy'
 
+// `atob` may not be present in the RN TS environment; declare for TypeScript.
+declare function atob(data: string): string;
+
  
 
 const AGREEMENT_TEXT = `AGRIQUEX USER AGREEMENT

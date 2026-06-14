@@ -24,15 +24,7 @@ const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
 
-function NavHeader({ title }: { title: string }) {
-  const insets = useSafeAreaInsets()
-  const theme = useAppTheme()
-  return (
-    <View style={[styles.navHeader, { paddingTop: insets.top, backgroundColor: theme.surface }]}> 
-      <Text style={[styles.navTitle, { color: theme.text }]}>{title}</Text>
-    </View>
-  )
-}
+
 
 function MainTabs() {
   const insets = useSafeAreaInsets()
@@ -75,7 +67,6 @@ function MainTabs() {
           tabBarIcon: ({ color, size, focused }: any) => (
             <MaterialCommunityIcons name={focused ? 'home' : 'home-outline'} size={size || 22} color={color} />
           ),
-          header: () => <NavHeader title="Home" />,
         }}
       />
       <Tab.Screen
@@ -86,7 +77,6 @@ function MainTabs() {
           tabBarIcon: ({ color, size, focused }: any) => (
             <MaterialCommunityIcons name={focused ? 'shopping' : 'shopping-outline'} size={size || 22} color={color} />
           ),
-          header: () => <NavHeader title="Browse" />,
         }}
       />
       <Tab.Screen
@@ -97,7 +87,6 @@ function MainTabs() {
           tabBarIcon: ({ color, size, focused }: any) => (
             <MaterialCommunityIcons name={focused ? 'plus-box' : 'plus-box-outline'} size={size || 22} color={color} />
           ),
-          header: () => <NavHeader title="Sell" />,
         }}
       />
       <Tab.Screen
@@ -108,7 +97,6 @@ function MainTabs() {
           tabBarIcon: ({ color, size, focused }: any) => (
             <MaterialCommunityIcons name={focused ? 'account' : 'account-outline'} size={size || 22} color={color} />
           ),
-          header: () => <NavHeader title="Account" />,
         }}
       />
     </Tab.Navigator>
@@ -121,23 +109,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  navHeader: {
-    width: '100%',
-    height: 90,
-    justifyContent: 'flex-end',
-    paddingBottom: 12,
-    paddingHorizontal: 20,
-  },
   
-  navTitle: {
-    color: '#ffffff',
-    fontSize: 22,
-    fontWeight: '900',
-    letterSpacing: 0.5,
-    textShadowColor: 'rgba(0,0,0,0.8)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 4,
-  },
 })
 
 export default function App() {
