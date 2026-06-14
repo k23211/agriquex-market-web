@@ -34,6 +34,7 @@ function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
+        headerShown: false,
         tabBarActiveTintColor: theme.tabBarActiveTint,
         tabBarInactiveTintColor: theme.tabBarInactiveTint,
         tabBarShowLabel: true,
