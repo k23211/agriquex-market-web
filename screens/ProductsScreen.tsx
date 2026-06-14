@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   
   container: { flex: 1, backgroundColor: 'transparent' },
   search: { margin: 12, padding: 12, backgroundColor: '#ffffffde', borderRadius: 10, borderWidth: 1, borderColor: '#ddd', fontSize: 15, color: '#111' },
-  catRow: { marginBottom: 8, maxHeight: 46 },
+  catRow: { marginBottom: 8, marginTop: 8, paddingTop: 6 },
   catChip: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', borderRadius: 20, paddingHorizontal: 14, paddingVertical: 8, marginRight: 8, height: 36, justifyContent: 'center' },
   catActive: { backgroundColor: '#16a34a', borderColor: '#16a34a' },
   catText: { color: '#666', fontSize: 13 },

@@ -418,17 +418,18 @@ export default function HomeScreen({ navigation }: any) {
       ) : (
         <FlatList
           data={products}
-          numColumns={2}
-          scrollEnabled={false}
+          horizontal
+          showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id}
+          contentContainerStyle={{ paddingHorizontal: 12 }}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={[styles.productCard, { backgroundColor: theme.surface }]}
+              style={[styles.productCardHorizontal, { backgroundColor: theme.surface }]}
               onPress={() => navigation.navigate('ProductDetail', { product: item })}
             >
               <Image
                 source={{ uri: item.image_url || 'https://via.placeholder.com/150' }}
-                style={styles.productImage}
+                style={styles.productImageHorizontal}
               />
               <Text style={[styles.productName, { color: theme.text }]} numberOfLines={1}>{item.name}</Text>
               <Text style={[styles.productPrice, { color: theme.accent2 }]}>GH₵ {item.price}</Text>
@@ -509,6 +510,8 @@ const styles = StyleSheet.create({
   sectionHeaderAlt: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, marginTop: 20 },
   productCard: { flex: 1, backgroundColor: '#111827', margin: 8, borderRadius: 12, overflow: 'hidden' },
   productImage: { width: '100%', height: 120 },
+  productCardHorizontal: { width: 180, marginRight: 12, borderRadius: 12, overflow: 'hidden' },
+  productImageHorizontal: { width: '100%', height: 120 },
   productName: { fontSize: 13, fontWeight: '700', color: '#fff', padding: 8 },
   productPrice: { fontSize: 13, color: '#f59e0b', fontWeight: '800', paddingHorizontal: 8, paddingBottom: 8 },
 })
