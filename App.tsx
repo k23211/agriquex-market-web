@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
 export default function App() {
   const [session, setSession] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const theme = useAppTheme()
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -172,8 +173,21 @@ export default function App() {
         {/* apply navigation container background from theme */}
         <NavigationContainer
           theme={{
-            dark: useAppTheme().dark,
-            colors: { background: useAppTheme().background, card: useAppTheme().surface, text: useAppTheme().text, border: useAppTheme().border, primary: useAppTheme().accent },
+            dark: theme.dark,
+            colors: {
+              background: theme.background,
+              card: theme.surface,
+              text: theme.text,
+              border: theme.border,
+              primary: theme.accent,
+              notification: theme.accent2,
+            },
+            fonts: {
+              regular: { fontFamily: 'System', fontWeight: '400' },
+              medium: { fontFamily: 'System', fontWeight: '500' },
+              bold: { fontFamily: 'System', fontWeight: '700' },
+              heavy: { fontFamily: 'System', fontWeight: '900' },
+            },
           }}
         >
           <Stack.Navigator screenOptions={{ headerShown: false }}>
