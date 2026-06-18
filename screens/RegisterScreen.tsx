@@ -21,16 +21,17 @@ export default function RegisterScreen({ navigation }: any) {
       Alert.alert('Missing fields', 'Please enter your name, email and password.')
       return
     }
-
     setLoading(true)
+
+    // Create the user account
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { full_name: fullName } }
     })
-    setLoading(false)
 
     if (error) {
+      setLoading(false)
       Alert.alert('Error', error.message)
       return
     }
@@ -46,9 +47,21 @@ export default function RegisterScreen({ navigation }: any) {
       }
     }
 
-    Alert.alert('Success', 'Account created successfully.', [
-      { text: 'OK', onPress: () => navigation.goBack() }
-    ])
+    // Attempt to sign the user in immediately so the app session is active
+    try {
+      const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
+      if (signInError) console.log('Sign-in after signup failed:', signInError)
+    } catch (e) {
+      console.log('Unexpected sign-in error:', e)
+    }
+
+    setLoading(false)
+
+    // Reset navigation to the main app so user lands on the dashboard/home
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Main' }],
+    })
   }
 
   return (
