@@ -19,6 +19,8 @@ import AccountScreen from './screens/AccountScreen'
 import SellerDashboard from './screens/SellerDashboard'
 import EditProfileScreen from './screens/EditProfileScreen'
 import ProductDetailScreen from './screens/productDetailScreen'
+import AdminDashboard from './screens/AdminDashboard'
+import RequireAdmin from './lib/RequireAdmin'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -154,6 +156,7 @@ export default function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             {/* Always show main app first */}
             <Stack.Screen name="Main" component={MainTabs} />
+            <Stack.Screen name="Admin" component={AdminDashboard} />
             <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
             <Stack.Screen name="EditProfile" component={EditProfileScreen} />
             {/* Auth screens pushed on top when needed */}

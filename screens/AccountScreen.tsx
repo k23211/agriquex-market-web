@@ -442,6 +442,12 @@ export default function AccountScreen({ navigation }: any) {
 
         </TouchableOpacity>
 
+        {(profile?.is_admin === true || profile?.role === 'admin') && (
+          <TouchableOpacity style={styles.adminBtn} onPress={() => navigation.navigate('Admin')}>
+            <Text style={styles.adminBtnText}>⚙️ Admin Dashboard</Text>
+          </TouchableOpacity>
+        )}
+
       </View>
 
       {/* User Agreement Modal */}
@@ -557,6 +563,8 @@ const styles = StyleSheet.create({
   termsBtn: { marginTop: 12, backgroundColor: 'transparent', paddingVertical: 14, borderRadius: 16, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.12)' },
 
   termsBtnText: { color: '#9ca3af', fontWeight: '600', fontSize: 14 },
+  adminBtn: { marginTop: 12, backgroundColor: '#0ea5a4', paddingVertical: 14, borderRadius: 16, alignItems: 'center' },
+  adminBtnText: { color: '#072f2f', fontWeight: '800', fontSize: 15 },
 
   // Modal
 
